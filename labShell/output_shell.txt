@@ -1,2 +1,6 @@
-Command:  wa
-hello world
+backupShell.py
+input_shell.txt
+output_shell.txt
+Readme.md
+shell.py
+test_output.txt
