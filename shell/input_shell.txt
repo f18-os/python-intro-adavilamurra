@@ -1,0 +1,4 @@
+ls
+wc
+wc > output_from_script.txt
+ls
