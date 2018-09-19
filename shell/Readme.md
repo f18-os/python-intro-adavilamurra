@@ -7,7 +7,7 @@ and running it manually.
 In order to run this project successfully you will have to run the following
 command in your shell:
 ```
-python3 shell.py
+$ python3 shell.py
 ```
 
 ## To run this shell you will need:
@@ -15,8 +15,8 @@ python3 shell.py
 * Linux Command Line Terminal
 
 ## Shell Description
-This shell will handle four different types of input. These types are: single
-command, input redirection, output redirection, and piping.
+This shell will handle four different types of input. These types are: `single
+command`, `input redirection`, `output redirection`, and `piping`.
 
 ### Single Command
 When receiving the prompt, the user can enter a shell command and wait for the
@@ -24,7 +24,7 @@ results.
 
 Example:
 
-> Input
+**Input**
 ```
 $ uname
 ```
@@ -32,7 +32,7 @@ or
 ```
 $ /bin/uname
 ```
-> Output
+**Output**
 ```
 Linux
 ```
@@ -46,11 +46,11 @@ input file.
 
 Example:
 
-> Input
+**Input**
 ```
 $ wc < shell.py
 ```
-> Output
+**Output**
 ```
  123  417 4243
 ```
@@ -64,11 +64,11 @@ the ouput file.
 
 Example:
 
-> Input
+**Input**
 ```
 $ wc shell.py > output_shell.txt
 ```
-> Output (in output_shell.txt)
+**Output** (in output_shell.txt)
 ```
  123  417 2342 shell.py
 ```
@@ -84,7 +84,7 @@ Piping uses this symbol ` | ` to separate the two commands from each other.
 
 Example:
 
-> Input
+**Input**
 ```
 $ ls | sort -r
 ```
