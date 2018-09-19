@@ -59,8 +59,7 @@ def run_command(user_input):
         if inputFlag:
             os.close(0)
             sys.stdin = open(args[len(args)-1], "r")
-            fd = sys.stdin.fileno()
-            os.set_inheritable(fd, True)
+            os.set_inheritable(0, True)
             args = [args[0]]
             
         if pipeFlag:
@@ -68,6 +67,7 @@ def run_command(user_input):
             os.dup(pw)
             for fd in (pr, pw):
                 os.close(fd)
+            print("hello from child")
             
         run_execve(args)
         os.write(2, ("Command not found.\n").encode())
@@ -79,11 +79,10 @@ def run_command(user_input):
         else:
             os.close(0)
             os.dup(pr)
-            for line in fileinput.input():
-                print("From child: <%s?" % line)
-            #run_execve([processes[1], pr], processes[1])
             for fd in (pw, pr):
                 os.close(fd)
+            for line in fileinput.input():
+                print("From child: <%s>" % line)
         
 def startShell(user_input, e):
     while True:
@@ -119,5 +118,5 @@ def startShell(user_input, e):
         
 os.write(1, ("Welcome to the shell.\n").encode())
 e = os.environ
-os.environ["PS1"] = ""
+os.environ["PS1"] = "$ "
 startShell("", e)
