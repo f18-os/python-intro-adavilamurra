@@ -18,7 +18,7 @@ def run_command(user_input):
     # check if there's redirection or piping and get commands
     if ' | ' in user_input:
         processes = user_input.split(' | ')
-        args = processes[0]
+        args = processes[0].split()
         pipeFlag = True
         pr, pw = os.pipe()      # file descriptors r, w for reading and writing
         for f in (pr, pw):
@@ -65,30 +65,31 @@ def run_command(user_input):
         if pipeFlag:
             os.close(1)
             os.dup(pw)
+            os.set_inheritable(1, True)
             for fd in (pr, pw):
                 os.close(fd)
-            print("hello from child")
-            
+
         run_execve(args)
         os.write(2, ("Command not found.\n").encode())
         sys.exit(1)                 # terminate with error 1
 
-    else:                           # parent (forked ok)
+    else:            # parent (forked ok)
         if not pipeFlag:
             childPidCode = os.wait()
         else:
             os.close(0)
             os.dup(pr)
+            os.set_inheritable(0, True)
             for fd in (pw, pr):
                 os.close(fd)
-            for line in fileinput.input():
-                print("From child: <%s>" % line)
-        
+            run_execve(processes[1].split())
+            
 def startShell(user_input, e):
     while True:
-        if user_input == "" or "cd" in user_input:
+        if user_input == "" or user_input == " " or "cd" in user_input:
             user_input = input(e["PS1"])         # request command and args from user
-            continue
+            if "cd" not in user_input:
+                continue
         if "\n" in user_input or "\\n" in user_input:
             #os.write(1, ("user input: %s \n" % user_input).encode())
             for command in user_input.split("\\n"):
@@ -118,5 +119,5 @@ def startShell(user_input, e):
         
 os.write(1, ("Welcome to the shell.\n").encode())
 e = os.environ
-os.environ["PS1"] = "$ "
+e["PS1"] = "$ "
 startShell("", e)
