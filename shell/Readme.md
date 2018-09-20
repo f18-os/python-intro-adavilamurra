@@ -80,8 +80,6 @@ first one reads. The process repeats until one side stops writing.
 
 Piping uses this symbol ` | ` to separate the two commands from each other.
 
-**This is still not working**
-
 Example:
 
 **Input**
