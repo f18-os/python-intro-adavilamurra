@@ -86,7 +86,7 @@ Example:
 ```
 $ ls | sort -r
 ```
-> Output
+**Output**
 ```
 test_output.txt
 shell.py
